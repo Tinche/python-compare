@@ -1,0 +1,9 @@
+ARG version=3.12
+
+FROM python:${version}
+
+RUN python${version} -m venv .venv && \
+    .venv/bin/pip install pyperformance
+
+ENTRYPOINT [".venv/bin/pyperformance", "run", "-b"]
+CMD ["nbody"]

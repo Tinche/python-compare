@@ -1,0 +1,11 @@
+FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim
+
+ARG version=3.12
+
+ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy
+
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv tool install --python ${version} pyperformance
+
+ENTRYPOINT ["/root/.local/bin/pyperformance", "run", "-b"]
+CMD ["nbody"]

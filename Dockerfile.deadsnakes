@@ -1,0 +1,18 @@
+FROM ubuntu:noble
+
+ARG version=3.12
+
+RUN apt-get update && \
+    apt-get install -y software-properties-common && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN add-apt-repository ppa:deadsnakes/ppa && \
+    apt-get update && \
+    apt-get install python${version} python${version}-venv --yes && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN python${version} -m venv .venv && \
+    .venv/bin/pip install pyperformance
+
+ENTRYPOINT [".venv/bin/pyperformance", "run", "-b"]
+CMD ["nbody"]
