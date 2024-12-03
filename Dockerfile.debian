@@ -1,0 +1,13 @@
+FROM debian:unstable
+
+ARG version=3.12
+
+RUN apt-get update && \
+    apt-get install -y python${version} python${version}-venv && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN python${version} -m venv .venv && \
+    .venv/bin/pip install pyperformance
+
+ENTRYPOINT [".venv/bin/pyperformance", "run", "-b"]
+CMD ["nbody"]

@@ -13,6 +13,9 @@ build-uv version=version:
 build-ubuntu version=version:
     docker buildx build . -f Dockerfile.ubuntu.{{ if version == "3.12" { "noble" } else { "oracular" } }} -t bench.ubuntu.{{version}}
 
+build-debian version=version:
+    docker buildx build . -f Dockerfile.debian -t bench.debian.{{version}} --build-arg version={{version}}
+
 bench-deadsnakes version=version BENCHMARK=benchmark:
     docker run --rm bench.deadsnakes.{{version}} {{BENCHMARK}}
 
@@ -25,6 +28,9 @@ bench-uv version=version BENCHMARK=benchmark:
 bench-ubuntu version=version BENCHMARK=benchmark:
     docker run --rm bench.ubuntu.{{version}} {{BENCHMARK}}
 
-build version=version: (build-deadsnakes version) (build-docker version) (build-uv version) (build-ubuntu version)
+bench-debian version=version BENCHMARK=benchmark:
+    docker run --rm bench.debian.{{version}} {{BENCHMARK}}
 
-bench BENCHMARK=benchmark version=version: (bench-deadsnakes version BENCHMARK) (bench-docker version BENCHMARK) (bench-uv version BENCHMARK) (bench-ubuntu version BENCHMARK)
+build version=version: (build-deadsnakes version) (build-docker version) (build-uv version) (build-ubuntu version) (build-debian version)
+
+bench BENCHMARK=benchmark version=version: (bench-deadsnakes version BENCHMARK) (bench-docker version BENCHMARK) (bench-uv version BENCHMARK) (bench-ubuntu version BENCHMARK) (bench-debian BENCHMARK)
