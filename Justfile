@@ -33,4 +33,4 @@ bench-debian version=version BENCHMARK=benchmark:
 
 build version=version: (build-deadsnakes version) (build-docker version) (build-uv version) (build-ubuntu version) (build-debian version)
 
-bench BENCHMARK=benchmark version=version: (bench-deadsnakes version BENCHMARK) (bench-docker version BENCHMARK) (bench-uv version BENCHMARK) (bench-ubuntu version BENCHMARK) (bench-debian BENCHMARK)
+bench BENCHMARK=benchmark version=version: (bench-deadsnakes version BENCHMARK) (bench-docker version BENCHMARK) (bench-uv version BENCHMARK) (bench-ubuntu version BENCHMARK) (bench-debian version BENCHMARK)
